@@ -1,11 +1,12 @@
 "use client";
 import { Model, playerPos } from "@/components/Player";
-import { Box, Environment, OrbitControls, Html } from "@react-three/drei";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Box, Environment, OrbitControls, Html , Sky} from "@react-three/drei";
+import { Canvas, useFrame , useThree} from "@react-three/fiber";
 import { Suspense, useRef } from "react";
 import { PointerLockControls, KeyboardControls } from "@react-three/drei";
 import { Ground } from "@/components/Ground";
 import { Physics, RigidBody } from "@react-three/rapier";
+import { Plane } from "@/components/Plane";
 
 export default function Home() {
   return (
@@ -20,26 +21,20 @@ export default function Home() {
         ]}
       >
         <Canvas>
-          {/* <Physics> */}
           <Suspense fallback={<Html>Loading...</Html>}>
+          {/* <Physics> */}
             {/* <Player /> */}
             <Model />
-          </Suspense>
+            <Plane/>
           <Environment preset="city" />
           <Ground />
+          <Sky/>
           {/* </Physics> */}
           {/* <PointerLockControls /> */}
+          {/* <FPSCameraControls/> */}
+          </Suspense>
         </Canvas>
       </KeyboardControls>
     </div>
   );
 }
-const Player = () => {
-  const ref = useRef();
-  useFrame((state) => {
-    if (ref.current) {
-      state.camera.position.set(ref.current.translation);
-    }
-  });
-  return <Model />;
-};
